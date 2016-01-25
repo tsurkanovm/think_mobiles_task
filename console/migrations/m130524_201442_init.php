@@ -17,7 +17,7 @@ class m130524_201442_init extends Migration
             'email' => $this->string()->notNull()->unique(),
             'name' => $this->string(20),
             'last_name' => $this->string(50),
-            'birth_date' => $this->integer(),
+            'birth_date' => $this->timestamp(),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
@@ -27,14 +27,32 @@ class m130524_201442_init extends Migration
         ], $tableOptions);
 
         $this->createTable('{{%interest}}', [
-            'id' => $this->primaryKey(),
+            'id' => 'tinyint UNSIGNED NOT NULL',
             'title' => $this->string(30)->notNull()->unique(),
         ], $tableOptions);
 
-//        $user_array = ['email' => 'test@test.com', 'name' => 'Admin',
-//            'password_hash' => '96e79218965eb72c92a549dd5a330112',
-//            'gender' => 'male', 'role_id' => 3];
-//        $this->insert('{{%user}}', $user_array);
+        $this->addPrimaryKey('pk-id', '{{%interest}}','id');
+
+        $table = <<< MySQL
+            CREATE TABLE `think_mobilies_db`.`user_interest` (
+            `id_user` INT(11) NOT NULL,
+            `id_interest` TINYINT(3) UNSIGNED NOT NULL,
+            PRIMARY KEY (`id_user`, `id_interest`),
+            INDEX `idx_id_user` (`id_user` ASC),
+            INDEX `fk_id_interest_idx` (`id_interest` ASC),
+            CONSTRAINT `fk_id_user`
+              FOREIGN KEY (`id_user`)
+              REFERENCES `think_mobilies_db`.`user` (`id`)
+              ON DELETE CASCADE
+              ON UPDATE CASCADE,
+            CONSTRAINT `fk_id_interest`
+              FOREIGN KEY (`id_interest`)
+              REFERENCES `think_mobilies_db`.`interest` (`id`)
+              ON DELETE CASCADE
+              ON UPDATE CASCADE)
+MySQL;
+
+        $this->execute($table);
 
         $interest_array = ['id' => 1, 'title' => 'Sport'];
         $this->insert('{{%interest}}', $interest_array);
@@ -55,5 +73,6 @@ class m130524_201442_init extends Migration
     {
         $this->dropTable('{{%user}}');
         $this->dropTable('{{%interest}}');
+        $this->dropTable('{{%user_interest}}');
     }
 }
