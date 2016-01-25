@@ -28,6 +28,11 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'request'=>[
+            'class' => 'common\components\Request',
+            'web'=> '/frontend/web',
+            'adminUrl' => ''
+        ],
     ],
     'params' => $params,
 ];
