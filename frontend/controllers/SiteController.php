@@ -65,22 +65,15 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * Displays homepage.
-     *
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
+
 
     /**
+     * Displays homepage.
      * Logs in a user.
      *
      * @return mixed
      */
-    public function actionLogin()
+    public function actionIndex()
     {
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -90,7 +83,7 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             $this->redirect( ['dashboard/index'] );
         } else {
-            return $this->render('login', [
+            return $this->render('index', [
                 'model' => $model,
             ]);
         }

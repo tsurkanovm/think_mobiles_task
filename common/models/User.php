@@ -131,6 +131,19 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * @return string - title for presentation user
+     */
+    public function getTitle()
+    {
+        $title = trim( $this->last_name . ' ' . $this->name );
+        if (!$title) {
+            $title = $this->email;
+        }
+
+        return $title;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getAuthKey()

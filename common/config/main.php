@@ -10,5 +10,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'user' => [
+            'enableAutoLogin'=>true,
+        ],
         ],
 ];

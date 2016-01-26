@@ -1,53 +1,42 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $form yii\bootstrap\ActiveForm */
+/* @var $model \common\models\LoginForm */
 
-$this->title = 'My Yii Application';
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+
+$this->title = 'Вход';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-index">
+<div class="site-login">
+    <h1><?= Html::encode($this->title) ?></h1>
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+    <p>Пожалуйста, заполните следующие поля для входа:</p>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+    <div class="row">
+        <div class="col-lg-5">
+            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+                <?= $form->field($model, 'email') ?>
 
-    <div class="body-content">
+                <?= $form->field($model, 'password')->passwordInput() ?>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <div style="color:#999;margin:1em 0">
+                    Если Вы забыли свой пароль - <?= Html::a('сбросить', ['site/request-password-reset']) ?>.
+                </div>
+                <div style="color:#999;margin:1em 0">
+                    Если Вы новый пользователь - <?= Html::a('зарегистрироваться', ['site/signup']) ?>.
+                </div>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                <div class="form-group">
+                    <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                </div>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+            <?php ActiveForm::end(); ?>
         </div>
-
     </div>
 </div>
