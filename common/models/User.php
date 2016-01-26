@@ -190,4 +190,15 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Имя',
+            'last_name' => 'Фамилия',
+            'birth_date' => 'Дата рождения',
+        ];
+    }
+
 }

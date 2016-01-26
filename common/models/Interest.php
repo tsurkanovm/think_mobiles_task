@@ -53,7 +53,7 @@ class Interest extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
+            'title' => 'Интрересы',
         ];
     }
 }

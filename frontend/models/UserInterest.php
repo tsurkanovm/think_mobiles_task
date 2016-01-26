@@ -43,7 +43,7 @@ class UserInterest extends \yii\db\ActiveRecord
     {
         return [
             'id_user' => 'Id User',
-            'id_interest' => 'Id Interest',
+            'id_interest' => 'Интересы',
         ];
     }
 
