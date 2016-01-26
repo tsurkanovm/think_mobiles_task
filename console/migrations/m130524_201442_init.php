@@ -12,7 +12,8 @@ class m130524_201442_init extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%user}}', [
+        if ( Yii::$app->db->schema->getTableSchema( '{{%user}}',true ) === null ) {
+            $this->createTable('{{%user}}', [
             'id' => $this->primaryKey(),
             'email' => $this->string()->notNull()->unique(),
             'name' => $this->string(20),
@@ -24,55 +25,55 @@ class m130524_201442_init extends Migration
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
-        ], $tableOptions);
+            ], $tableOptions);
+        }
 
-        $this->createTable('{{%interest}}', [
-            'id' => 'tinyint UNSIGNED NOT NULL',
-            'title' => $this->string(30)->notNull()->unique(),
-        ], $tableOptions);
 
-        $this->addPrimaryKey('pk-id', '{{%interest}}','id');
+        if ( Yii::$app->db->schema->getTableSchema( '{{%interest}}',true ) === null ) {
+            $this->createTable('{{%interest}}', [
+                'id' => 'tinyint UNSIGNED NOT NULL',
+                'title' => $this->string(30)->notNull()->unique(),
+            ], $tableOptions);
+            $this->addPrimaryKey('pk-id', '{{%interest}}','id');
+        }
 
-        $table = <<< MySQL
-            CREATE TABLE `think_mobilies_db`.`user_interest` (
-            `id_user` INT(11) NOT NULL,
-            `id_interest` TINYINT(3) UNSIGNED NOT NULL,
-            PRIMARY KEY (`id_user`, `id_interest`),
-            INDEX `idx_id_user` (`id_user` ASC),
-            INDEX `fk_id_interest_idx` (`id_interest` ASC),
-            CONSTRAINT `fk_id_user`
-              FOREIGN KEY (`id_user`)
-              REFERENCES `think_mobilies_db`.`user` (`id`)
-              ON DELETE CASCADE
-              ON UPDATE CASCADE,
-            CONSTRAINT `fk_id_interest`
-              FOREIGN KEY (`id_interest`)
-              REFERENCES `think_mobilies_db`.`interest` (`id`)
-              ON DELETE CASCADE
-              ON UPDATE CASCADE)
-MySQL;
 
-        $this->execute($table);
+        if ( Yii::$app->db->schema->getTableSchema( '{{%user_interest}}',true ) === null ) {
+            $this->createTable('{{%user_interest}}', [
+                'id_user' => $this->integer(11)->notNull(),
+                'id_interest' => 'tinyint UNSIGNED NOT NULL',
+            ], $tableOptions);
+            $this->addPrimaryKey('pk-id', '{{%user_interest}}','id_user, id_interest');
+            $this->addForeignKey('fk_id_user', '{{%user_interest}}', 'id_user', '{{%user}}', 'id', 'CASCADE','CASCADE');
+            $this->addForeignKey('fk_id_interest', '{{%user_interest}}', 'id_interest', '{{%interest}}', 'id', 'CASCADE','CASCADE');
 
-        $interest_array = ['id' => 1, 'title' => 'Sport'];
-        $this->insert('{{%interest}}', $interest_array);
-        $interest_array = ['id' => 2, 'title' => 'Programming'];
-        $this->insert('{{%interest}}', $interest_array);
-        $interest_array = ['id' => 3, 'title' => 'Sience'];
-        $this->insert('{{%interest}}', $interest_array);
-        $interest_array = ['id' => 4, 'title' => 'Travels'];
-        $this->insert('{{%interest}}', $interest_array);
-        $interest_array = ['id' => 5, 'title' => 'Psychology'];
-        $this->insert('{{%interest}}', $interest_array);
-        $interest_array = ['id' => 6, 'title' => 'TV'];
-        $this->insert('{{%interest}}', $interest_array);
+            // fill the table by default data
+            $interest_array = ['id' => 1, 'title' => 'Спорт'];
+            $this->insert('{{%interest}}', $interest_array);
+            $interest_array = ['id' => 2, 'title' => 'Программирование'];
+            $this->insert('{{%interest}}', $interest_array);
+            $interest_array = ['id' => 3, 'title' => 'Наука'];
+            $this->insert('{{%interest}}', $interest_array);
+            $interest_array = ['id' => 4, 'title' => 'Путешествия'];
+            $this->insert('{{%interest}}', $interest_array);
+            $interest_array = ['id' => 5, 'title' => 'Психология'];
+            $this->insert('{{%interest}}', $interest_array);
+            $interest_array = ['id' => 6, 'title' => 'Телевидение'];
+            $this->insert('{{%interest}}', $interest_array);
+        }
 
     }
 
     public function safeDown()
     {
-        $this->dropTable('{{%user}}');
-        $this->dropTable('{{%interest}}');
-        $this->dropTable('{{%user_interest}}');
+        if ( Yii::$app->db->schema->getTableSchema( '{{%user_interest}}',true ) !== null ) {
+            $this->dropTable('{{%user_interest}}');
+        }
+        if ( Yii::$app->db->schema->getTableSchema( '{{%user}}',true ) !== null ) {
+            $this->dropTable('{{%user}}');
+        }
+        if ( Yii::$app->db->schema->getTableSchema( '{{%interest}}',true ) !== null ) {
+            $this->dropTable('{{%interest}}');
+        }
     }
 }
