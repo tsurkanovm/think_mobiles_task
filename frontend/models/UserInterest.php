@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use common\components\CustomVarDamp;
 use Yii;
 
 /**
@@ -46,18 +47,15 @@ class UserInterest extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @param integer - $id_user user id for whom will be get interests
+     * @return array of user interest (as value - id_interest)
      */
-    public function getIdInterest()
+    public static function getUserInterest($id_user)
     {
-        return $this->hasOne(Interest::className(), ['id' => 'id_interest']);
-    }
+        $models_arr = self::find(['id_user' => $id_user])->asArray()->all();
+        $result_array = array_column($models_arr, 'id_interest');
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'id_user']);
+        return $result_array;
+
     }
 }
