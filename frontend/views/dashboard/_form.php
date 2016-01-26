@@ -16,6 +16,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'last_name')->textInput() ?>
     <?= $form->field($model, 'birth_date')->textInput() ?>
     <?= $form->field($user_interest_model, 'id_interest')->checkboxList( $interest_arr ) ?>
+    <?= $form->field($user_interest_model, 'id_user')->hiddenInput( ) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>

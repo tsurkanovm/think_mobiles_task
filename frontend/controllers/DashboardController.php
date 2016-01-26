@@ -7,6 +7,7 @@ use common\components\CustomVarDamp;
 use common\models\Interest;
 use Yii;
 use common\models\User;
+use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -26,8 +27,10 @@ class DashboardController extends Controller
     public function actionIndex()
     {
         $id =  Yii::$app->user->identity->getId();
+        $current_interests_arr = UserInterest::getUserInterest( $id, true );
         return $this->render('index', [
             'model' => $this->findModel($id),
+            'current_interests_arr' => $current_interests_arr
         ]);
     }
 
@@ -43,15 +46,20 @@ class DashboardController extends Controller
         $model = $this->findModel($id);
         // create user interests model
         $user_interest_model = new UserInterest();
-        // get whole array of interest (for making a choice in update view)
-        $interest_arr = Interest::getInterestAsArray();
-        // get array of interest that user already choose
-        $checked_interest_arr = UserInterest::getUserInterest($id);
-        // set chosen interest
-        $user_interest_model->id_interest = $checked_interest_arr;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $post_arr = Yii::$app->request->post();
+        if ( $model->load( $post_arr ) && $user_interest_model->load( $post_arr ) && $model->save() ) {
+            $user_interest_model->updateInterests();
             return $this->redirect(['index']);
+
         } else {
+            // get whole array of interest (for making a choice in update view)
+            $interest_arr = Interest::getInterestAsArray();
+            // get array of interest that user already choose
+            $checked_interest_arr = UserInterest::getUserInterest($id);
+            // set chosen interest
+            $user_interest_model->id_interest = $checked_interest_arr;
+            $user_interest_model->id_user = $id;
+
             return $this->render('update', [
                 'model' => $model,
                 'user_interest_model' => $user_interest_model,
