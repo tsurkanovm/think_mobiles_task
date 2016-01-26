@@ -3,6 +3,7 @@
 namespace app\models;
 
 use common\components\CustomVarDamp;
+use common\models\Interest;
 use Yii;
 
 /**
@@ -48,14 +49,59 @@ class UserInterest extends \yii\db\ActiveRecord
 
     /**
      * @param integer - $id_user user id for whom will be get interests
-     * @return array of user interest (as value - id_interest)
+     * @param bool - $with_title - if true - result array will be has as value - title from Interest table, otherwise - id_interest
+     * @return array of user interest
      */
-    public static function getUserInterest($id_user)
+    public static function getUserInterest($id_user, $with_title = false)
     {
         $models_arr = self::find(['id_user' => $id_user])->asArray()->all();
         $result_array = array_column($models_arr, 'id_interest');
+        // for with_title mode - replace id to title from Interest model
+        if ( $with_title ) {
+            // get all interests
+            $all_interest_arr = Interest::getInterestAsArray();
+            $result_array = array_map( function($value) use ($all_interest_arr) {
+                if ( empty( $all_interest_arr[$value] ) ) {
+                    // it's almost impossible, anyway handle this situation
+                    return '';
+                }else{
+                    return $all_interest_arr[$value];
+                }
+            }, $result_array );
+        }
 
         return $result_array;
 
     }
+
+    /**
+     * update values - existing items - delete, new ones - inserts
+     * @throws \Exception
+     */
+    public function updateInterests(){
+
+        // get exist interests from db
+        $exist_interests_arr = self::getUserInterest( $this->id_user );
+        // get interests  - that user choose
+        $chosen_interests_arr = $this->id_interest;
+
+        // get interests that was choose but not exist in db
+        $new_interests_arr = array_diff($chosen_interests_arr, $exist_interests_arr);
+
+        // get interests that will be deleted, since user has unchecked them
+        $old_interests_arr = array_diff($exist_interests_arr, $chosen_interests_arr);
+
+        // delete old interests
+        $this->deleteAll( ['id_user' => $this->id_user, 'id_interest' => $old_interests_arr] );
+
+        // add new ones
+        foreach ( $new_interests_arr as $item ) {
+            $this->setOldAttributes( null );
+            $this->id_interest = $item;
+            $this->insert();
+        }
+
+
+    }
+
 }
