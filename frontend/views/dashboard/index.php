@@ -21,10 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'last_name',
             'birth_date',
+            [
+                'label'=> 'Интересы',
+                'format' => 'raw',
+                'value' => Html::ul($current_interests_arr),
+            ],
         ],
     ]) ?>
-
-    <?= Html::ul($current_interests_arr) ?>
 
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
