@@ -2,9 +2,13 @@
 
 namespace frontend\controllers;
 
+use app\models\UserInterest;
+use common\components\CustomVarDamp;
+use common\models\Interest;
 use Yii;
 use common\models\User;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,14 +39,23 @@ class DashboardController extends Controller
      */
     public function actionUpdate($id)
     {
+        // find user model
         $model = $this->findModel($id);
-
+        // create user interests model
+        $user_interest_model = new UserInterest();
+        // get whole array of interest (for making a choice in update view)
+        $interest_arr = Interest::getInterestAsArray();
+        // get array of interest that user already choose
+        $checked_interest_arr = UserInterest::getUserInterest($id);
+        // set chosen interest
+        $user_interest_model->id_interest = $checked_interest_arr;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'user_interest_model' => $user_interest_model,
+                'interest_arr' => $interest_arr,
             ]);
         }
     }
