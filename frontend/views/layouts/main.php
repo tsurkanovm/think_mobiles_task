@@ -38,12 +38,13 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
     } else {
+        $menuItems[] = ['label' => 'Личный кабинет', 'url' => ['/dashboard/index']];
         $menuItems[] = [
             'url' => ['/site/logout'],
             'linkOptions' => ['data-method' => 'post'],
             'label' => 'Выйти (' . Yii::$app->user->identity->title . ')',
         ];
-        $menuItems[] = ['label' => 'Личный кабинет', 'url' => ['/dashboard/index']];
+
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
