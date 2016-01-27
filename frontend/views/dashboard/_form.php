@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 use kartik\datecontrol\DateControl;
 
 /* @var $this yii\web\View */
@@ -25,7 +25,7 @@ use kartik\datecontrol\DateControl;
             ]
         ]
     ]); ?>
-    <?= $form->field($user_interest_model, 'id_interest')->checkboxList( $interest_arr, ['separator' => '</br>'] ) ?>
+    <?= $form->field($user_interest_model, 'id_interest')->checkboxList( $interest_arr )?>
     <?= $form->field($user_interest_model, 'id_user')->hiddenInput( )->label(false) ?>
 
     <div class="form-group">
