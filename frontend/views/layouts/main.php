@@ -36,12 +36,14 @@ AppAsset::register($this);
     ]);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
             'label' => 'Выйти (' . Yii::$app->user->identity->title . ')',
             'url' => ['/site/logout'],
             'linkOptions' => ['data-method' => 'post']
         ];
+        $menuItems[] = ['label' => 'Личный кабинет', 'url' => ['/dashboard/index']];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
