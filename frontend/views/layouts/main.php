@@ -39,9 +39,9 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
-            'label' => 'Выйти (' . Yii::$app->user->identity->title . ')',
             'url' => ['/site/logout'],
-            'linkOptions' => ['data-method' => 'post']
+            'linkOptions' => ['data-method' => 'post'],
+            'label' => 'Выйти (' . Yii::$app->user->identity->title . ')',
         ];
         $menuItems[] = ['label' => 'Личный кабинет', 'url' => ['/dashboard/index']];
     }
