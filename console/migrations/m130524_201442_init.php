@@ -18,7 +18,7 @@ class m130524_201442_init extends Migration
             'email' => $this->string()->notNull()->unique(),
             'name' => $this->string(20),
             'last_name' => $this->string(50),
-            'birth_date' => $this->timestamp(),
+            'birth_date' => $this->date(),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
