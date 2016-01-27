@@ -31,7 +31,7 @@ class UserInterest extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_interest'], 'required'],
+            [['id_user', 'id_interest'], 'required', 'enableClientValidation' => false],
             [['id_user', 'id_interest'], 'integer']
         ];
     }
