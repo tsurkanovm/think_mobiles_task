@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'name',
             'last_name',
-            'birth_date',
+            'birth_date:date',
             [
                 'label'=> 'Интересы',
                 'format' => 'raw',
