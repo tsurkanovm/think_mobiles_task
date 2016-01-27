@@ -56,6 +56,8 @@ class User extends ActiveRecord implements IdentityInterface
             ['name', 'string', 'max' => 20 ],
             ['last_name', 'string', 'max' => 50 ],
             ['birth_date', 'integer' ],
+            ['birth_date', 'default', 'value' => null],
+            ['birth_date', 'date'],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }

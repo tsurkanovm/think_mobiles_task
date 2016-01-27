@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($user_interest_model, 'id_user')->hiddenInput( )->label(false) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Update', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

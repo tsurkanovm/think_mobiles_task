@@ -80,6 +80,7 @@ class LoginForm extends Model
     {
         return [
             'password' => 'Пароль',
+            'rememberMe' => 'запомнить меня',
         ];
     }
 }

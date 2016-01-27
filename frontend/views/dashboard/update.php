@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
 
-$this->title = 'Редактирование пользователя: ' . ' ' . $model->email;
+$this->title =  Yii::$app->user->identity->title;
 $this->params['breadcrumbs'][] = ['label' => 'Личный кабинет', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Редактирование';
 ?>

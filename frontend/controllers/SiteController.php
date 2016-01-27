@@ -65,8 +65,6 @@ class SiteController extends Controller
         ];
     }
 
-
-
     /**
      * Displays homepage.
      * Logs in a user.
@@ -76,7 +74,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if (!\Yii::$app->user->isGuest) {
-            return $this->goHome();
+            $this->redirect( ['dashboard/index'] );
         }
 
         $model = new LoginForm();
