@@ -55,7 +55,7 @@ class UserInterest extends \yii\db\ActiveRecord
      */
     public static function getUserInterest($id_user, $with_title = false)
     {
-        $models_arr = self::find(['id_user' => $id_user])->asArray()->all();
+        $models_arr = self::find()->where(['id_user' => $id_user])->asArray()->all();
         $result_array = ArrayHelper::getColumn($models_arr, 'id_interest');
         // for with_title mode - replace id to title from Interest model
         if ( $with_title ) {

@@ -26,6 +26,9 @@ class DashboardController extends Controller
      */
     public function actionIndex()
     {
+        if (\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
         $id =  Yii::$app->user->identity->getId();
         $current_interests_arr = UserInterest::getUserInterest( $id, true );
         return $this->render('index', [
