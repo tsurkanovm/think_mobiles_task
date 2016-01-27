@@ -24,10 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-                <div style="color:#999;margin:1em 0">
-                    Если Вы забыли свой пароль - <?= Html::a('сбросить', ['site/request-password-reset']) ?>.
-                </div>
+            
                 <div style="color:#999;margin:1em 0">
                     Если Вы новый пользователь - <?= Html::a('зарегистрироваться', ['site/signup']) ?>.
                 </div>
