@@ -82,8 +82,8 @@ class UserInterest extends \yii\db\ActiveRecord
 
         // get exist interests from db
         $exist_interests_arr = self::getUserInterest( $this->id_user );
-        // get interests  - that user choose
-        $chosen_interests_arr = $this->id_interest;
+        // get interests  - that user choose (if user didn't choose anything - get empty array)
+        $chosen_interests_arr = is_array( $this->id_interest ) ? $this->id_interest : array();
 
         // get interests that was choose but not exist in db
         $new_interests_arr = array_diff($chosen_interests_arr, $exist_interests_arr);
