@@ -5,6 +5,7 @@ namespace app\models;
 use common\components\CustomVarDamp;
 use common\models\Interest;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "user_interest".
@@ -55,7 +56,7 @@ class UserInterest extends \yii\db\ActiveRecord
     public static function getUserInterest($id_user, $with_title = false)
     {
         $models_arr = self::find(['id_user' => $id_user])->asArray()->all();
-        $result_array = array_column($models_arr, 'id_interest');
+        $result_array = ArrayHelper::getColumn($models_arr, 'id_interest');
         // for with_title mode - replace id to title from Interest model
         if ( $with_title ) {
             // get all interests
